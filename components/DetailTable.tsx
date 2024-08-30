@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import moment from 'moment';
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -14,8 +15,6 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from 'lucide-react';
-import Link from 'next/link';
-import { Switch } from '@/components/ui/switch';
 
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -38,31 +37,35 @@ import {
   TableRow,
 } from '@/components/ui/table';
 
-const data: Sensor[] = [
+const data: SensorData[] = [
   {
-    id: 'm5gr84i9',
-    location: 'Da Nang',
-    status: 'ON',
+    activity_id: '1',
+    activity_type: 'ENABLE',
+    value: 40.1,
+    created_at: '2024-08-29T10:10:26.394Z',
   },
   {
-    id: 'jasjf2j53',
-    location: 'Hoi An',
-    status: 'ON',
+    activity_id: '2',
+    activity_type: 'DISABLE',
+    value: 39.8,
+    created_at: '2024-08-29T10:10:26.394Z',
   },
   {
-    id: 'amosj76f',
-    location: 'Sai Gon',
-    status: 'OFF',
+    activity_id: '3',
+    activity_type: 'PUBLISH',
+    value: 38.5,
+    created_at: '2024-08-29T10:10:26.394Z',
   },
 ];
 
-export type Sensor = {
-  id: string;
-  location: string;
-  status: 'ON' | 'OFF';
+export type SensorData = {
+  activity_id: string;
+  activity_type: 'ENABLE' | 'DISABLE' | 'PUBLISH';
+  value: number;
+  created_at: any;
 };
 
-export const columns: ColumnDef<Sensor>[] = [
+export const columns: ColumnDef<SensorData>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -86,42 +89,44 @@ export const columns: ColumnDef<Sensor>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'id',
+    accessorKey: 'activity_id',
     header: 'ID',
-    cell: ({ row }) => {
-      const id: string = row.getValue('id');
-      return (
-        <div>
-          <Link href={`detail/${id}`}>{id}</Link>
-        </div>
-      );
-    },
+    cell: ({ row }) => <div>{row.getValue('activity_id')}</div>,
   },
   {
-    accessorKey: 'location',
+    accessorKey: 'activity_type',
+    header: 'Type',
+    cell: ({ row }) => <div>{row.getValue('activity_type')}</div>,
+  },
+  {
+    accessorKey: 'value',
     header: ({ column }) => {
       return (
         <Button
           variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Location
+          Value
           <ArrowUpDown className='ml-2 h-4 w-4' />
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue('location')}</div>,
+    cell: ({ row }) => <div>{row.getValue('value')}</div>,
   },
   {
-    accessorKey: 'status',
-    header: 'Status',
-    cell: ({ row }) => <Switch>{row.getValue('status')}</Switch>,
+    accessorKey: 'created_at',
+    header: 'Created At',
+    cell: ({ row }) => (
+      <div>
+        {moment(row.getValue('created_at')).format('DD/MM/YYYY HH:mm:ss')}
+      </div>
+    ),
   },
   {
     id: 'actions',
     enableHiding: false,
     cell: ({ row }) => {
-      const payment = row.original;
+      const sensorData = row.original;
 
       return (
         <DropdownMenu>
@@ -134,7 +139,9 @@ export const columns: ColumnDef<Sensor>[] = [
           <DropdownMenuContent align='end'>
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
+              onClick={() =>
+                navigator.clipboard.writeText(sensorData.activity_id)
+              }
             >
               Copy payment ID
             </DropdownMenuItem>
@@ -148,7 +155,7 @@ export const columns: ColumnDef<Sensor>[] = [
   },
 ];
 
-export function DataTable() {
+export function DetailTable() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -180,12 +187,12 @@ export function DataTable() {
     <div className='w-full'>
       <div className='flex items-center pb-4'>
         <Input
-          placeholder='Filter location...'
+          placeholder='Filter type...'
           value={
-            (table.getColumn('location')?.getFilterValue() as string) ?? ''
+            (table.getColumn('activity_type')?.getFilterValue() as string) ?? ''
           }
           onChange={(event) =>
-            table.getColumn('location')?.setFilterValue(event.target.value)
+            table.getColumn('activity_type')?.setFilterValue(event.target.value)
           }
           className='max-w-sm'
         />

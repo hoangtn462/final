@@ -1,6 +1,8 @@
 import * as React from 'react';
 
 import { Button } from '@/components/ui/button';
+import Image from 'next/image';
+import profilePic from '../../arduino.jpg';
 import {
   Card,
   CardContent,
@@ -17,9 +19,16 @@ export function Item() {
       {Array.from({ length: 10 }, (_, index) => (
         <Card className='box' key={index}>
           <CardHeader>
-            <CardTitle>Create project</CardTitle>
+            <CardTitle>Equipment</CardTitle>
             <CardDescription>
-              Deploy your new project in one-click.
+              <Image
+                src={profilePic}
+                alt='Picture of the author'
+                // width={500} automatically provided
+                // height={500} automatically provided
+                // blurDataURL="data:..." automatically provided
+                // placeholder="blur" // Optional blur-up while loading
+              />
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -29,7 +38,7 @@ export function Item() {
           </CardContent>
           <CardFooter className='flex justify-between'>
             <Button variant='outline'>Cancel</Button>
-            <Button>Deploy</Button>
+            <Button>Rent</Button>
           </CardFooter>
         </Card>
       ))}
