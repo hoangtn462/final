@@ -10,10 +10,10 @@ import { LogOut, Users } from 'lucide-react';
 
 export function Header() {
   return (
-    <div className='flex justify-between px-10 py-4 bg-gray-400 fixed top-0 w-full'>
+    <div className='flex justify-between px-10 py-4 bg-gray-400 fixed top-0 w-full z-50'>
       <div className='flex gap-10'>
         <Link href={'/'}>Home</Link>
-        <Link href={'/rent'}>Equipment rental</Link>
+        <Link href={'/rent'}>Sensor rental</Link>
       </div>
 
       <DropdownMenu>

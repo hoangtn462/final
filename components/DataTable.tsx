@@ -40,17 +40,17 @@ import {
 
 const data: Sensor[] = [
   {
-    id: 'm5gr84i9',
+    id: '1',
     location: 'Da Nang',
     status: 'ON',
   },
   {
-    id: 'jasjf2j53',
+    id: '2',
     location: 'Hoi An',
     status: 'ON',
   },
   {
-    id: 'amosj76f',
+    id: '3',
     location: 'Sai Gon',
     status: 'OFF',
   },
@@ -102,6 +102,7 @@ export const columns: ColumnDef<Sensor>[] = [
     header: ({ column }) => {
       return (
         <Button
+          className='p-0'
           variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
@@ -136,11 +137,9 @@ export const columns: ColumnDef<Sensor>[] = [
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(payment.id)}
             >
-              Copy payment ID
+              Copy ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

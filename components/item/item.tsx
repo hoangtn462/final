@@ -19,16 +19,10 @@ export function Item() {
       {Array.from({ length: 10 }, (_, index) => (
         <Card className='box' key={index}>
           <CardHeader>
-            <CardTitle>Equipment</CardTitle>
+            <CardTitle>Fire Sensor</CardTitle>
             <CardDescription>
-              <Image
-                src={profilePic}
-                alt='Picture of the author'
-                // width={500} automatically provided
-                // height={500} automatically provided
-                // blurDataURL="data:..." automatically provided
-                // placeholder="blur" // Optional blur-up while loading
-              />
+              <p>Location: Da Lat</p>
+              <p>Status: On</p>
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -36,8 +30,7 @@ export function Item() {
               <div className='grid w-full items-center gap-4'></div>
             </form>
           </CardContent>
-          <CardFooter className='flex justify-between'>
-            <Button variant='outline'>Cancel</Button>
+          <CardFooter className='justify-end mt-4'>
             <Button>Rent</Button>
           </CardFooter>
         </Card>
